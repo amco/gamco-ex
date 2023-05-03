@@ -17,7 +17,7 @@ end
 
 ## Configuration
 
-Provide your `TAG_ID` in your configuration file:
+Provide a `TAG_ID` in your configuration file:
 
 ```elixir
 # config/config.exs
@@ -50,7 +50,7 @@ defmodule MyAppWeb.Gamco do
 end
 ```
 
-Then import your Gamco module inside your phoenix view or component
+Then import the Gamco module inside your phoenix view or component
 depending on what you are using. Example:
 
 ```elixir
@@ -63,7 +63,7 @@ end
 ```
 
 Usually you'll want to add your Google Analytics script
-immediately after your `<head>` tag in your html template.
+immediately after the `<head>` tag in your html template.
 
 ```elixir
 # lib/my_app_web/templates/layout/root.html.heex
@@ -109,7 +109,7 @@ or when needed by using the `ga_tag` helper as the following example:
 ## Secure data
 
 There are sensitive information that you might not want to send
-it directly to Google Analytics to prevent some vulnerabilities.
+directly to Google Analytics to prevent some vulnerabilities.
 You can achieve this by using the `ga_secure` helper which
 generates a digest for the passed value:
 
