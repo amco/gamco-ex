@@ -27,6 +27,12 @@ defmodule Gamco do
       """
       def ga_javascript_tags(opts \\ %{})
 
+      def ga_javascript_tags(opts) when is_list(opts) do
+        opts
+        |> Enum.into(%{})
+        |> ga_javascript_tags()
+      end
+
       def ga_javascript_tags(opts) when is_map(opts) do
         if ga_active?() do
           %{}
@@ -35,12 +41,6 @@ defmodule Gamco do
           |> Map.put(:gtag_manager_url, @gtag_manager_url)
           |> Component.javascript_tags()
         end
-      end
-
-      def ga_javascript_tags(opts) when is_list(opts) do
-        opts
-        |> Enum.into(%{})
-        |> ga_javascript_tags()
       end
 
       @doc """
