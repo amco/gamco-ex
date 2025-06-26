@@ -3,10 +3,12 @@ defmodule Gamco.Component do
 
   import Phoenix.HTML, only: [raw: 1]
 
+  attr :nonce, :string, default: nil
+
   def javascript_tags(assigns) do
     ~H"""
     <script async src={"#{@gtag_manager_url}?id=#{@tag_id}"}></script>
-    <script>
+    <script nonce={@nonce}>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag("js", new Date());
@@ -15,9 +17,11 @@ defmodule Gamco.Component do
     """
   end
 
+  attr :nonce, :string, default: nil
+
   def tag(assigns) do
     ~H"""
-    <script>
+    <script nonce={@nonce}>
       gtag("<%= @type %>", "<%= @event %>", <%= raw(@dimensions) %>)
     </script>
     """
