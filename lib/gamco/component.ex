@@ -3,7 +3,7 @@ defmodule Gamco.Component do
 
   import Phoenix.HTML, only: [raw: 1]
 
-  attr :nonce, :string, default: nil
+  attr(:nonce, :string, default: nil)
 
   def javascript_tags(assigns) do
     ~H"""
@@ -17,7 +17,7 @@ defmodule Gamco.Component do
     """
   end
 
-  attr :nonce, :string, default: nil
+  attr(:nonce, :string, default: nil)
 
   def tag(assigns) do
     ~H"""
