@@ -24,6 +24,14 @@ defmodule Gamco do
             gtag("config", "G-XXXXXXXXX", {});
           </script>
 
+          iex> ga_javascript_tags(nonce: "random")
+          <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXX"></script>
+          <script nonce>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag("js", new Date());
+            gtag("config", "G-XXXXXXXXX", {});
+          </script>
       """
       def ga_javascript_tags(opts \\ %{})
 
@@ -34,9 +42,12 @@ defmodule Gamco do
       end
 
       def ga_javascript_tags(opts) when is_map(opts) do
+        {nonce, opts} = Map.pop(opts, :nonce)
+
         if ga_active?() do
           %{}
           |> Map.put(:tag_id, ga_tag_id())
+          |> Map.put(:nonce, nonce)
           |> Map.put(:data, Jason.encode!(opts))
           |> Map.put(:gtag_manager_url, @gtag_manager_url)
           |> Component.javascript_tags()
@@ -48,8 +59,8 @@ defmodule Gamco do
 
       ## Examples
 
-          iex> ga_tag("event", "product_view", product_id: 1)
-          <script>
+          iex> ga_tag("event", "product_view", product_id: 1, nonce: "r@ndom")
+          <script nonce>
             gtag("event", "product_view", {"product_id": 1})
           </script>
 
@@ -61,9 +72,12 @@ defmodule Gamco do
       end
 
       def ga_tag(type, event, opts) when is_map(opts) do
+        {nonce, opts} = Map.pop(opts, :nonce)
+
         if ga_active?() do
           %{}
           |> Map.put(:type, type)
+          |> Map.put(:nonce, nonce)
           |> Map.put(:event, event)
           |> Map.put(:dimensions, Jason.encode!(opts))
           |> Component.tag()
