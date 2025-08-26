@@ -3,6 +3,9 @@ defmodule Gamco.Component do
 
   import Phoenix.HTML, only: [raw: 1]
 
+  attr(:gtag_manager_url, :string, required: true)
+  attr(:tag_id, :string, required: true)
+  attr(:data, :string, required: true)
   attr(:nonce, :string, default: nil)
 
   def javascript_tags(assigns) do
@@ -17,6 +20,9 @@ defmodule Gamco.Component do
     """
   end
 
+  attr(:type, :string, required: true)
+  attr(:event, :string, required: true)
+  attr(:dimensions, :string, required: true)
   attr(:nonce, :string, default: nil)
 
   def tag(assigns) do

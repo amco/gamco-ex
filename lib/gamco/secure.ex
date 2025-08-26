@@ -5,9 +5,12 @@ defmodule Gamco.Secure do
   """
 
   @doc """
-  This function hashes the value passed as argument
-  using md5 hexadecimal and downcases the resulting
-  string.
+  Hashes the value passed as argument using md5 hexadecimal
+  and downcases the resulting string.
+
+  ## Parameters
+
+    - value: The string to be hashed.
 
   ## Examples
 
@@ -15,6 +18,7 @@ defmodule Gamco.Secure do
       "acbd18db4cc2f85cedef654fccc4a4d8"
 
   """
+  @spec call(String.t()) :: String.t()
   def call(value) do
     :crypto.hash(:md5, value)
     |> Base.encode16()
