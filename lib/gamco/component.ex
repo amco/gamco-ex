@@ -1,4 +1,9 @@
 defmodule Gamco.Component do
+  @moduledoc """
+  This module provides helper functions to generate Google Tag Manager
+  (GTM) JavaScript tags and event tracking scripts for use in Phoenix templates.
+  """
+
   use Phoenix.Component
 
   import Phoenix.HTML, only: [raw: 1]
