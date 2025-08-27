@@ -11,18 +11,15 @@ defmodule Gamco do
       @gtag_manager_url "https://www.googletagmanager.com/gtag/js"
 
       @doc """
-      This function generates scripts to initialize Google Analytics.
+      Generates scripts to initialize Google Analytics.
+
+      ## Parameters
+
+        - `opts` - A map or keyword list of options to configure the GA scripts.
+          - `:nonce` - A string representing a nonce value for CSP.
+          - Additional options can be passed and will be sent to GA.
 
       ## Examples
-
-          iex> ga_javascript_tags()
-          <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXX"></script>
-          <script>
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag("js", new Date());
-            gtag("config", "G-XXXXXXXXX", {});
-          </script>
 
           iex> ga_javascript_tags(nonce: "random")
           <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXX"></script>
@@ -32,7 +29,9 @@ defmodule Gamco do
             gtag("js", new Date());
             gtag("config", "G-XXXXXXXXX", {});
           </script>
+
       """
+      @spec ga_javascript_tags(map() | keyword()) :: String.t() | nil
       def ga_javascript_tags(opts \\ %{})
 
       def ga_javascript_tags(opts) when is_list(opts) do
@@ -55,7 +54,15 @@ defmodule Gamco do
       end
 
       @doc """
-      This function generates gtag tag for custom events.
+      Generates gtag tag for custom events.
+
+      ## Parameters
+
+        - `type` - A string representing the type of gtag call (e.g., "event").
+        - `event` - A string representing the event name (e.g., "product_view").
+        - `opts` - A map or keyword list of additional parameters to send with the event.
+          - `:nonce` - A string representing a nonce value for CSP.
+          - Additional options can be passed and will be sent to GA.
 
       ## Examples
 
@@ -65,6 +72,7 @@ defmodule Gamco do
           </script>
 
       """
+      @spec ga_tag(String.t(), String.t(), map() | keyword()) :: String.t() | nil
       def ga_tag(type, event, opts \\ %{})
 
       def ga_tag(type, event, opts) when is_list(opts) do
@@ -85,7 +93,11 @@ defmodule Gamco do
       end
 
       @doc """
-      This function secure data in order to be send to GA.
+      Secures data in order to be sent to Google Analytics.
+
+      ## Parameters
+
+        - `value` - The value to be secured.
 
       ## Examples
 
@@ -96,7 +108,8 @@ defmodule Gamco do
           nil
 
       """
-      def ga_secure(value) when is_nil(value), do: nil
+      @spec ga_secure(String.t() | nil) :: String.t() | nil
+      def ga_secure(nil), do: nil
       def ga_secure(value), do: secure_module().call(value)
 
       defp ga_active? do
